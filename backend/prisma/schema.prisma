@@ -1,0 +1,72 @@
+// This is the Prisma schema file.
+// It defines your database structure in a clear, readable format.
+// Think of it like a "blueprint" for your database tables.
+
+// 📚 INTERVIEW EXPLANATION:
+// Prisma reads this file and:
+//   1. Creates the actual database tables for you (via `prisma migrate`)
+//   2. Generates TypeScript types so your code is type-safe
+//   3. Generates the Prisma Client (prisma.user.findMany(), etc.)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 📚 INTERVIEW EXPLANATION:
+// The datasource block tells Prisma which database to use.
+// provider = "sqlite" means a local file-based DB (zero setup!)
+// url = where the database file is stored
+// env("DATABASE_URL") reads from the .env file
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// USER MODEL
+// Represents a person who has registered on the platform
+// ============================================================
+model User {
+  // @id = primary key (unique identifier for each row)
+  // @default(cuid()) = auto-generate a unique ID like "clx1234abc"
+  id        String   @id @default(cuid())
+
+  // @unique = no two users can have the same email
+  email     String   @unique
+
+  // Stores the HASHED password (never plain text!)
+  password  String
+
+  // Role: "USER" = regular customer, "ADMIN" = dealership staff
+  role      String   @default("USER")
+
+  // @default(now()) = automatically set to current timestamp on creation
+  createdAt DateTime @default(now())
+
+  // Map this model to the "users" table in the database
+  @@map("users")
+}
+
+// ============================================================
+// VEHICLE MODEL
+// Represents a car in the dealership inventory
+// ============================================================
+model Vehicle {
+  id       String   @id @default(cuid())
+
+  // Car details
+  make     String   // e.g. "Toyota", "Honda", "BMW"
+  model    String   // e.g. "Camry", "Civic", "3 Series"
+  category String   // e.g. "Sedan", "SUV", "Truck", "Electric"
+  price    Float    // e.g. 25000.00 (in dollars)
+
+  // Inventory tracking - how many of this car we have in stock
+  quantity Int      @default(0)
+
+  createdAt DateTime @default(now())
+
+  // @updatedAt = automatically updates to current time whenever the record changes
+  updatedAt DateTime @updatedAt
+
+  @@map("vehicles")
+}
