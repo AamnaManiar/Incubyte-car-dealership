@@ -1,5 +1,5 @@
 import React from 'react';
-import { Edit2, Trash2, Tag, Hash, DollarSign } from 'lucide-react';
+import { Edit2, Trash2, Tag, Hash } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 interface Vehicle {
