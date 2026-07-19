@@ -32,7 +32,7 @@ const DashboardPage: React.FC = () => {
     try {
       // Build query string from filters
       const queryParams = new URLSearchParams(filters as Record<string, string>).toString();
-      const response = await axiosClient.get(`/vehicles?${queryParams}`);
+      const response = await axiosClient.get(`/vehicles/search?${queryParams}`);
       setVehicles(response.data.data);
       setError(null);
     } catch (err: any) {
