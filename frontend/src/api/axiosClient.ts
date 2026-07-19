@@ -7,7 +7,7 @@ import axios from 'axios';
 // 2. Add an Interceptor: automatically attach the JWT token to every request
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
 });
 
 // Interceptor: Runs before every request is sent
