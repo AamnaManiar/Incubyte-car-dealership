@@ -106,13 +106,13 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-mesh flex flex-col transition-colors duration-500">
       <Navbar />
       
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-end mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Inventory</h1>
+            <h1 className="text-4xl font-extrabold text-gradient tracking-tight">Inventory Showcase</h1>
             <p className="text-gray-500 mt-1">Browse and manage available vehicles.</p>
           </div>
           

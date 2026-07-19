@@ -10,6 +10,7 @@ export interface CreateVehicleInput {
   category: string;
   price: number;
   quantity: number;
+  imageUrl?: string;
 }
 
 /**

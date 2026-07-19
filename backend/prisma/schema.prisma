@@ -54,6 +54,9 @@ model Vehicle {
   // Inventory tracking - how many of this car we have in stock
   quantity Int      @default(0)
 
+  // Optional image URL for the car photo
+  imageUrl String?
+
   createdAt DateTime @default(now())
 
   // @updatedAt = automatically updates to current time whenever the record changes

@@ -36,6 +36,9 @@ export class VehicleController {
   createVehicle = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
     try {
       const { make, model, category, price, quantity } = req.body;
+      
+      // If a file was uploaded, construct the local URL
+      const imageUrl = req.file ? `/uploads/${req.file.filename}` : undefined;
 
       if (!make || !model || !category || price === undefined || quantity === undefined) {
         res.status(400).json({
@@ -51,6 +54,7 @@ export class VehicleController {
         category,
         price: Number(price),
         quantity: Number(quantity),
+        ...(imageUrl && { imageUrl }),
       });
 
       res.status(201).json({ success: true, data: vehicle });
@@ -107,7 +111,19 @@ export class VehicleController {
     try {
       // req.params.id = the :id part of the URL
       const { id } = req.params;
-      const vehicle = await this.vehicleService.updateVehicle(id as string, req.body);
+      
+      const updateData = { ...req.body };
+      
+      // If a file was uploaded, construct the local URL
+      if (req.file) {
+        updateData.imageUrl = `/uploads/${req.file.filename}`;
+      }
+
+      // Convert numbers if they were sent as form-data strings
+      if (updateData.price) updateData.price = Number(updateData.price);
+      if (updateData.quantity) updateData.quantity = Number(updateData.quantity);
+
+      const vehicle = await this.vehicleService.updateVehicle(id as string, updateData);
       res.status(200).json({ success: true, data: vehicle });
     } catch (error) {
       const err = error as Error;

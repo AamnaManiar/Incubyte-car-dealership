@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-lg shadow-blue-900/5;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600;
+  }
+}
+
+/* Custom Micro-Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.hover-float:hover {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Dynamic background mesh for dashboard */
+.bg-mesh {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(217,100%,94%,1) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, hsla(253,100%,94%,1) 0, transparent 50%);
+}

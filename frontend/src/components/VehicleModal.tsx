@@ -30,9 +30,11 @@ const VehicleModal: React.FC<VehicleModalProps> = ({
     price: 0,
     quantity: 1,
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   // When modal opens with initialData (Edit mode), populate the form
   useEffect(() => {
+    setImageFile(null);
     if (initialData) {
       setFormData(initialData);
     } else {
@@ -50,9 +52,28 @@ const VehicleModal: React.FC<VehicleModalProps> = ({
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    
+    // Convert to FormData to support file upload
+    const submitData = new FormData();
+    submitData.append('make', formData.make);
+    submitData.append('model', formData.model);
+    submitData.append('category', formData.category);
+    submitData.append('price', formData.price.toString());
+    submitData.append('quantity', formData.quantity.toString());
+    if (imageFile) {
+      submitData.append('image', imageFile);
+    }
+
+    // Call onSave with the FormData object
+    onSave(submitData as any);
   };
 
   return (
@@ -74,6 +95,18 @@ const VehicleModal: React.FC<VehicleModalProps> = ({
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          
+          {/* File Upload */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Vehicle Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+            />
+          </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Make</label>

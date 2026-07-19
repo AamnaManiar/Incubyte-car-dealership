@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { VehicleController } from './vehicles.controller';
 import { authenticate } from '../../middleware/auth';
 import { adminOnly } from '../../middleware/adminOnly';
+import { upload } from '../../utils/upload';
 
 /**
  * Vehicle Routes
@@ -32,11 +33,11 @@ router.get('/search', authenticate, vehicleController.searchVehicles);
 // GET /api/vehicles — any logged-in user can view
 router.get('/', authenticate, vehicleController.getAllVehicles);
 
-// POST /api/vehicles — admin only can add
-router.post('/', authenticate, adminOnly, vehicleController.createVehicle);
+// POST /api/vehicles — admin only can add, supports image upload
+router.post('/', authenticate, adminOnly, upload.single('image'), vehicleController.createVehicle);
 
-// PUT /api/vehicles/:id — admin only can update
-router.put('/:id', authenticate, adminOnly, vehicleController.updateVehicle);
+// PUT /api/vehicles/:id — admin only can update, supports image upload
+router.put('/:id', authenticate, adminOnly, upload.single('image'), vehicleController.updateVehicle);
 
 // DELETE /api/vehicles/:id — admin only can delete
 router.delete('/:id', authenticate, adminOnly, vehicleController.deleteVehicle);

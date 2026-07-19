@@ -62,6 +62,10 @@ app.use('/api/auth', authRoutes);
 // Vehicle routes: GET /api/vehicles, POST /api/vehicles, etc.
 app.use('/api/vehicles', vehicleRoutes);
 
+// Serve uploaded images statically
+import path from 'path';
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // Engine check endpoint — our car-themed health check!
 // Returns 200 if the server is running so cloud providers know we are online.
 

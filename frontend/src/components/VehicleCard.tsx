@@ -9,6 +9,7 @@ interface Vehicle {
   category: string;
   price: number;
   quantity: number;
+  imageUrl?: string;
 }
 
 interface VehicleCardProps {
@@ -38,8 +39,25 @@ const VehicleCard: React.FC<VehicleCardProps> = ({
   const isOutOfStock = vehicle.quantity <= 0;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full group">
-      {/* Card Header with Category Badge */}
+    <div className="glass-panel rounded-xl overflow-hidden hover-float transition-all duration-300 flex flex-col h-full group cursor-pointer relative top-0 hover:-top-2">
+      {/* Card Header with Image */}
+      <div className="relative h-56 bg-gray-100 overflow-hidden">
+        {/* Dark Gradient Overlay for premium feel */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        {vehicle.imageUrl ? (
+          <img 
+            src={`http://localhost:5000${vehicle.imageUrl}`} 
+            alt={`${vehicle.make} ${vehicle.model}`}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-400">
+            No image
+          </div>
+        )}
+      </div>
+
       <div className="p-5 border-b border-gray-50 flex justify-between items-start">
         <div>
           <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
