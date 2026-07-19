@@ -2,8 +2,6 @@ import app from './app';
 
 /**
  * Server Entry Point
- *
- * 📚 INTERVIEW EXPLANATION:
  * This file is ONLY responsible for starting the HTTP server.
  * All Express configuration is in app.ts.
  *
@@ -17,5 +15,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚗 Car Dealership API running on http://localhost:${PORT}`);
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`❤️  Health check: http://localhost:${PORT}/health`);
+  console.log(`❤️  Engine check: http://localhost:${PORT}/engine-check`);
 });

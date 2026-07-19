@@ -26,23 +26,15 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 // Here, we store the logged-in user and their JWT token so ANY component (like Navbar or Dashboard)
 // can easily check if the user is logged in, or get their role.
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-
-  // When the app first loads, check if we have saved auth data in localStorage
-  useEffect(() => {
-    const savedToken = localStorage.getItem('token');
+  // Synchronously check localStorage so we don't get kicked out on refresh!
+  const [user, setUser] = useState<User | null>(() => {
     const savedUser = localStorage.getItem('user');
-
-    if (savedToken && savedUser) {
-      try {
-        setToken(savedToken);
-        setUser(JSON.parse(savedUser));
-      } catch (e) {
-        console.error('Failed to parse user from local storage');
-      }
-    }
-  }, []);
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+  
+  const [token, setToken] = useState<string | null>(() => {
+    return localStorage.getItem('token');
+  });
 
   const login = (userData: User, authToken: string) => {
     setUser(userData);

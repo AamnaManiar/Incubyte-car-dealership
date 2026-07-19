@@ -12,7 +12,7 @@ import vehicleRoutes from './modules/vehicles/vehicles.routes';
 /**
  * Express Application Setup
  *
- * 📚 INTERVIEW EXPLANATION: Why separate app.ts from index.ts?
+ *  Why separate app.ts from index.ts?
  * ==============================================================
  * app.ts = The Express app configuration (routes, middleware)
  * index.ts = The server startup (listen on port)
@@ -34,7 +34,7 @@ const app = express();
  * Allows our React frontend (localhost:5173) to call our API (localhost:5000)
  * Without this, browsers block cross-origin requests by default!
  *
- * 📚 INTERVIEW: What is CORS?
+ * 
  * Browser security feature that blocks web pages from making requests
  * to a different domain/port than the one that served the page.
  * We configure it to allow our frontend's origin.
@@ -62,12 +62,13 @@ app.use('/api/auth', authRoutes);
 // Vehicle routes: GET /api/vehicles, POST /api/vehicles, etc.
 app.use('/api/vehicles', vehicleRoutes);
 
-// Health check endpoint — useful for deployment monitoring
-// Returns 200 if the server is running
-app.get('/health', (_req, res) => {
+// Engine check endpoint — our car-themed health check!
+// Returns 200 if the server is running so cloud providers know we are online.
+
+app.get('/engine-check', (_req, res) => {
   res.status(200).json({
     success: true,
-    message: 'Car Dealership API is running',
+    message: 'Vroom vroom! The Car Dealership Engine is running smoothly.',
     timestamp: new Date().toISOString(),
   });
 });
@@ -80,4 +81,4 @@ app.use((_req, res) => {
   });
 });
 
-export default app;
+export default app; 

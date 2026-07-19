@@ -2,21 +2,12 @@
 // It defines your database structure in a clear, readable format.
 // Think of it like a "blueprint" for your database tables.
 
-// 📚 INTERVIEW EXPLANATION:
-// Prisma reads this file and:
-//   1. Creates the actual database tables for you (via `prisma migrate`)
-//   2. Generates TypeScript types so your code is type-safe
-//   3. Generates the Prisma Client (prisma.user.findMany(), etc.)
 
 generator client {
   provider = "prisma-client-js"
 }
 
-// 📚 INTERVIEW EXPLANATION:
-// The datasource block tells Prisma which database to use.
-// provider = "sqlite" means a local file-based DB (zero setup!)
-// url = where the database file is stored
-// env("DATABASE_URL") reads from the .env file
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
